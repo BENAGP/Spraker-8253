@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "../include/speaker.h"
 
+#define DEVICE_NAME "speaker"
+
 void main()
 {
 	int fd;
@@ -17,7 +19,7 @@ void main()
 	{
 		tone[i] = (1193182.0 / (1.0 * f[i]));//Frequency division value and the clock signal is 11.9MHz
 	}
-	fd = open(DEVICE_NAME, O_RDWR);//open the device with the name
+	fd = open("/dev/speaker", O_RDWR);//open the device with the name
 	if( fd == -1)
 	{
 		//open device error
@@ -29,7 +31,9 @@ void main()
 		for(j = 0; j < 43; j++)
 		{
 			if((j % 7) == 0)
+			{
 				usleep(500000);//Delay of half a second every seven notes
+			}
 			write(fd, &tone[j], 2);//write the value 
 			usleep(500000);
 			printf("Note: %d\n", f[j]);

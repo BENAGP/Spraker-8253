@@ -1,0 +1,1 @@
+cmd_/home/cymfghj/S/8253/src/speaker.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/cymfghj/S/8253/src/speaker.ko /home/cymfghj/S/8253/src/speaker.o /home/cymfghj/S/8253/src/speaker.mod.o ;  true

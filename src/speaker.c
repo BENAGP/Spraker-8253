@@ -4,17 +4,17 @@
 #include <linux/module.h>
 #include <linux/ioport.h>
 #include <asm/uaccess.h>
-#include <asm.io.h>
-#include <../include/speaker.h>
+#include <asm/io.h>
+#include "../include/speaker.h" 
 
 static int Device_Open = 0;
 static int speaker_open(struct inode *inode, struct file *file)
 {
 	//open the speaker device
-	if(Deivce_Open)
+	if(Device_Open)
 		return -EBUSY;
 	Device_Open++;
-	printk("Device has been opened!"\n);
+	printk("Device has been opened!\n");
 	return 0;
 }
 
@@ -36,14 +36,15 @@ static ssize_t speaker_write(struct file *file, const char *buffer, size_t lengt
 	return 0;
 }
 
-struct file_operations Fops = {
+struct file_operations Fops={
         write:speaker_write,
         open:speaker_open,
-        release:speak_release,
-}
+        release:speaker_release,
+};
 
-int init_module()	//initialize the speaker module
+int init_module()
 {
+	//initialize the speaker module
 	int major;
 	major = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);//register the deive
 	if(major < 0){
